@@ -1,0 +1,157 @@
+// This file is part of www.nand2tetris.org
+// and the book "The Elements of Computing Systems"
+// by Nisan and Schocken, MIT Press.
+// File name: projects/12/String.jack
+
+/**
+ * Represents character strings. In addition for constructing and disposing
+ * strings, the class features methods for getting and setting individual
+ * characters of the string, for erasing the string's last character,
+ * for appending a character to the string's end, and more typical
+ * string-oriented operations.
+ */
+class String {
+
+     field Array str;
+     field int length;static int maxLength_;
+    /** constructs a new empty string with a maximum length of maxLength
+     *  and initial length of 0. */
+    constructor String new(int maxLength) {
+      let str=Array.new(maxLength);
+      let length=0;
+      let maxLength_=maxLength;
+      return this;
+
+    }
+
+    /** Disposes this string. */
+    method void dispose() {
+      do Memory.deAlloc(str);
+      do Memory.deAlloc(this);
+      return;
+    }
+
+    /** Returns the current length of this string. */
+    method int length() {
+      return length;
+    }
+
+    /** Returns the character at the j-th location of this string. */
+    method char charAt(int j) {
+      return str[j];
+    }
+
+    /** Sets the character at the j-th location of this string to c. */
+    method void setCharAt(int j, char c) {
+     if(j<(maxLength_-1) ){
+        let str[j]=c;
+        if(j>(length-1)){
+        let length=length+1;
+        }
+     }
+
+      return;
+    }
+
+    /** Appends c to this string's end and returns this string. */
+    method String appendChar(char c) {
+       let str[length]=c;
+       let length=length+1;
+       return this;
+    }
+
+    /** Erases the last character from this string. */
+    method void eraseLastChar() {
+       let length=length-1;
+       return;
+    }
+
+    /** Returns the integer value of this string,
+     *  until a non-digit character is detected. */
+    method int intValue() {
+        var int counter,result,i;var boolean negative;
+        let counter=0;let i=length-1;
+        while(counter<length){
+
+            if(str[counter]=45){let counter=counter+1;let i=i-1;let negative =true;}
+            if(String.Map(str[counter])=100){return result;}
+            let result =result+((String.Map(str[counter])) * (String.power(i))) ;
+            let counter=counter+1;let i=i-1;
+        }
+        if(negative){return (0-result);}
+        return result;
+    }
+
+    /** Sets this string to hold a representation of the given value. */
+    method void setInt(int val) {
+     var int modulo,i,x,counter,j,z;
+     var Array temp;
+     let temp=Array.new(10);let length=0;
+     if(val=0){let str[0]=48;return;}
+     //if val is negative,make it positive(if it is -1 make it 1) and store '-' as first char of the string str.
+     if(val<0){let val=val+(2*(0-val));let str[0]=45;let x=1;let z=1;}
+     while(val>0){
+         let modulo=val-((val/10)*10);
+         let val=val/10;
+        let temp[i]=modulo+48;
+        let i=i+1;let z=z+1;
+     }
+     if(x=0){do setCharAt(0,temp[i-1]);let j=1;}
+     while(z>0){
+         do setCharAt(1+counter,temp[i-1-j]);
+         let counter=counter+1;
+         let i=i-1;
+         let z=z-1;
+     }
+    // let length=x;
+    return;
+    }
+
+    /** Returns the new line character. */
+    function char newLine() {
+       return 128;
+    }
+
+    /** Returns the backspace character. */
+    function char backSpace() {
+       return 129;
+    }
+
+    /** Returns the double quote (") character. */
+    function char doubleQuote() {
+       return 34;
+    }
+    function int Map(char c){
+    if(c=48){return 0;}
+    if(c=49){return 1;}
+    if(c=50){return 2;}
+    if(c=51){return 3;}
+    if(c=52){return 4;}
+    if(c=53){return 5;}
+    if(c=54){return 6;}
+    if(c=55){return 7;}
+    if(c=56){return 8;}
+    if(c=57){return 9;}
+
+    else {return 100;}
+
+    }
+    function int power(int i){
+    var int res;var boolean exist;
+      let res=1;
+      while ((i>2) | (i=2)){
+         let res=res* Math.multiply(10,10);
+          let i=i-2;
+          let exist=true;
+      }
+      if(i=1){
+      let res=res *10;
+      }
+      if((~(exist))&(i=0)){
+      return 1;
+      }
+
+      return res;
+
+    }
+}

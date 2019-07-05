@@ -1,0 +1,56 @@
+class Memory {
+   static Array ram,freeList,temp;
+   function void init() {
+     let ram=0;
+     let freeList=2048;
+     let freeList[0]=null;
+     let freeList[1]=14334;
+     return;
+   }
+
+   function int peek (int address){
+     return ram[address];
+   }
+
+   function void poke (int address,int value){
+     let ram[address]=value;
+     return;
+   }
+   function int alloc (int size){
+
+        var int x;var int smallest;var int availableAddress; var int availableSegment;var int differ;
+        let temp=freeList;
+        let x=size+2;let availableSegment=20000;//let found=false;
+        while(~(temp=null)){
+            if(((temp[1]>x) | (temp[1]=x) ) & (temp[1]< availableSegment )){
+               let availableAddress=temp+1+temp[1]-x+1;
+               let availableSegment=temp[1];
+               //let found=true;
+            }
+            let temp=temp[0];
+        }
+
+         let ram[availableAddress]=null;
+         let ram[availableAddress+1]=x-2;
+         let differ=availableSegment-x;
+         let ram[availableAddress-differ-1]=ram[availableAddress-differ-1]-x;
+      return availableAddress+2 ;
+   }
+   function void deAlloc (int address){
+     //make sure that the address is already alloced.if not,simply does nothing
+     if(ram[address-2]=0){
+        var Array s;
+        let temp=freeList;
+        while (~(temp=null)){
+             let s=temp;
+             let  temp=temp[0];
+         }
+        let s[0]=address-2;
+     }
+
+         return;
+    }
+
+
+
+}

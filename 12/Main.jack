@@ -1,0 +1,8 @@
+class Main{
+function void main(){
+var String s;
+let s=String.new(10);
+s[0]=222;
+}
+return;
+}
